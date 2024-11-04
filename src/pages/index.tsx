@@ -6,7 +6,12 @@ export default function Home() {
     <div>
       <Header />
       <SubHeader />
-      <h2 className="h-screen w-full">hello world!</h2>
+      {/* content */}
+      <div className="mx-auto w-full max-w-[88rem]">
+        <h2 className="h-screen w-full text-gray-800 dark:bg-black dark:text-white">
+          hello world!
+        </h2>
+      </div>
     </div>
   );
 }
