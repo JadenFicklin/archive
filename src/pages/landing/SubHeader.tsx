@@ -25,13 +25,19 @@ export default function SubHeader() {
           : "border-transparent bg-transparent dark:bg-black"
       }`}
     >
-      <div className="absolute -bottom-6 right-5 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-xs text-transparent">
+      <div
+        className={`bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-xs text-transparent ${isSticky ? "absolute right-10 top-1" : "absolute right-10 top-9"}`}
+      >
         Coins: 0
       </div>
 
-      <div className="mx-auto flex h-16 w-full max-w-[88rem] items-center px-8">
-        <div className="mr-4 flex w-full">
-          <div className="text-gray mr-10 flex items-center justify-center space-x-2 py-6 text-center text-2xl font-bold dark:text-white">
+      <div
+        className={`mx-auto flex w-full max-w-[88rem] items-center px-6 duration-100 ${
+          isSticky ? "h-14" : "h-20"
+        }`}
+      >
+        <div className="flex w-full">
+          <div className="text-gray flex items-center space-x-2 text-center text-2xl font-bold dark:text-white">
             <Image
               src={logo}
               alt="Logo"
@@ -43,7 +49,7 @@ export default function SubHeader() {
             {/* Light and Dark Mode Toggle Button */}
             <button
               onClick={toggleTheme}
-              className="ring-offset-background focus-visible:ring-ring dark:hover:bg-zinc-00 flex h-10 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium outline-none transition-colors hover:bg-slate-200 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:outline-none active:ring-0 disabled:pointer-events-none disabled:opacity-50"
+              className="ring-offset-background focus-visible:ring-ring flex h-10 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium outline-none transition-colors hover:bg-slate-200 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:outline-none active:ring-0 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-zinc-800"
             >
               {theme === "light" ? (
                 <svg
