@@ -19,25 +19,23 @@ export default function SubHeader() {
 
   return (
     <div
-      className={`top-0 z-[50] w-full border-b ${
+      className={`relative top-0 z-[50] w-full border-b ${
         isSticky
           ? "sticky border-neutral-200 bg-white dark:border-white/[0.1] dark:bg-black"
           : "border-transparent bg-transparent dark:bg-black"
       }`}
     >
       <div
-        className={`bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-xs text-transparent ${isSticky ? "absolute right-10 top-1" : "absolute right-10 top-9"}`}
+        className={`absolute right-2 top-0 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-xs text-transparent`}
       >
         Coins: 0
       </div>
 
       <div
-        className={`mx-auto flex w-full max-w-[88rem] items-center px-6 duration-100 ${
-          isSticky ? "h-14" : "h-20"
-        }`}
+        className={`mx-auto mt-2 flex h-16 w-full max-w-[88rem] items-center px-6 duration-100`}
       >
         <div className="flex w-full">
-          <div className="text-gray flex items-center space-x-2 text-center text-2xl font-bold dark:text-white">
+          <div className="flex items-center space-x-2 text-center text-2xl font-bold text-gray dark:text-white">
             <Image
               src={logo}
               alt="Logo"

@@ -12,6 +12,7 @@ export default {
       colors: {
         gray: "#272727",
         lightGray: "#808080",
+        accent: "#EAEAEA",
       },
     },
   },
