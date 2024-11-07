@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { Drawer } from "~/components/Drawer";
 import { FaChevronDown } from "react-icons/fa6";
 import { cn } from "~/utils/cn";
@@ -15,12 +16,17 @@ export const Categories: React.FC = () => {
   const [expandedCategories, setExpandedCategories] = useState<{
     [key: number]: boolean;
   }>({});
+  const router = useRouter();
 
   const toggleCategory = (index: number) => {
     setExpandedCategories((prevState) => ({
       ...prevState,
       [index]: !prevState[index],
     }));
+  };
+
+  const handleSubItemClick = (name: string) => {
+    router.push(`/${name.toLowerCase()}`);
   };
 
   return (
@@ -43,7 +49,10 @@ export const Categories: React.FC = () => {
             {item.categorySubs.map((subItem, subIndex) => (
               <div key={subIndex}>
                 <Drawer show={!expandedCategories[index]} duration={"250ms"}>
-                  <p className="cursor-pointer rounded-lg p-1 pl-2 text-sm text-lightGray duration-300 hover:pl-4 hover:text-blue-500 dark:hover:text-green-500">
+                  <p
+                    className="cursor-pointer rounded-lg p-1 pl-2 text-sm text-lightGray duration-300 hover:pl-4 hover:text-blue-500 dark:hover:text-green-500"
+                    onClick={() => handleSubItemClick(subItem.name)}
+                  >
                     {subItem.name}
                   </p>
                 </Drawer>
