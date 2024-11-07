@@ -13,7 +13,7 @@ const SubCategoryPage: FC = () => {
   const displayName = typeof subCategory === "string" ? subCategory : undefined;
 
   return (
-    <div>
+    <div className="dark:bg-black">
       <Header />
       <SubHeader />
 

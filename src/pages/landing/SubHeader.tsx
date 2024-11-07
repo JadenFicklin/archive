@@ -3,6 +3,7 @@ import Image from "next/image";
 import logo from "~/assets/images/logo.png";
 import { useAtom } from "jotai";
 import { toggleThemeAtom } from "~/globalState/themeAtom";
+import { cn } from "~/utils/cn";
 
 export default function SubHeader() {
   const [isSticky, setIsSticky] = useState(false);
@@ -26,28 +27,30 @@ export default function SubHeader() {
       }`}
     >
       <div
-        className={`absolute right-2 top-0 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-xs text-transparent`}
-      >
-        Coins: 0
-      </div>
-
-      <div
         className={`mx-auto mt-2 flex h-16 w-full max-w-[88rem] items-center px-6 duration-100`}
       >
         <div className="flex w-full">
-          <div className="flex items-center space-x-2 text-center text-2xl font-bold text-gray dark:text-white">
+          <div className="relative flex items-center space-x-2 text-center text-2xl font-bold text-gray dark:text-white">
             <Image
               src={logo}
               alt="Logo"
               className="relative flex h-8 w-8 items-center justify-center rounded-md border md:h-6 md:w-6"
             />
             <p>Archive js</p>
+            <p
+              className={cn(
+                "absolute -left-1 w-max text-base font-normal text-lightGray duration-300",
+                isSticky ? "-bottom-0 opacity-0" : "-bottom-5 opacity-100",
+              )}
+            >
+              A code playground built by Jaden Ficklin
+            </p>
           </div>
           <div className="flex flex-1 items-center justify-end gap-2 sm:gap-2 md:justify-end">
             {/* Light and Dark Mode Toggle Button */}
             <button
               onClick={toggleTheme}
-              className="ring-offset-background focus-visible:ring-ring flex h-10 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium outline-none transition-colors hover:bg-slate-200 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:outline-none active:ring-0 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-zinc-800"
+              className="ring-offset-background focus-visible:ring-ring relative -right-2 flex h-10 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium outline-none transition-colors hover:bg-slate-200 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:outline-none active:ring-0 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-zinc-800"
             >
               {theme === "light" ? (
                 <svg

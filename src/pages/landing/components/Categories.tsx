@@ -30,7 +30,7 @@ export const Categories: React.FC = () => {
   };
 
   return (
-    <div className="mt-10 h-screen w-full select-none space-y-2 px-6">
+    <div className="relative -left-1 mt-10 h-screen w-full select-none space-y-2 px-6">
       {categories.map((item: Category, index: number) => (
         <div key={index}>
           <div
@@ -50,7 +50,7 @@ export const Categories: React.FC = () => {
               <div key={subIndex}>
                 <Drawer show={!expandedCategories[index]} duration={"250ms"}>
                   <p
-                    className="cursor-pointer rounded-lg p-1 pl-2 text-sm text-lightGray duration-300 hover:pl-4 hover:text-blue-500 dark:hover:text-green-500"
+                    className="cursor-pointer rounded-lg p-1 pl-2 text-sm text-lightGray duration-300 hover:pl-4 hover:text-blue-500"
                     onClick={() => handleSubItemClick(subItem.name)}
                   >
                     {subItem.name}
