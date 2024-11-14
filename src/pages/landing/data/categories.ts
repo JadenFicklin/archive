@@ -6,6 +6,7 @@ export const categories = [
     categorySubs: [
       {
         name: "Cookie Clicker",
+        subHeader: "Click the cookie and buy assets to earn coins!",
         page: CookieClicker,
       },
       {
