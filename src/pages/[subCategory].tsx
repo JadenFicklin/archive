@@ -1,27 +1,34 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { Categories } from "~/pages/landing/components/Categories";
+import Layout from "~/components/Layout";
 import { Display } from "~/pages/landing/components/Display";
-import Header from "~/pages/landing/Header";
-import SubHeader from "~/pages/landing/SubHeader";
+import { categories } from "~/pages/landing/data/categories";
+
+const getPageComponent = (subCategoryName: string) => {
+  for (const category of categories) {
+    for (const sub of category.categorySubs) {
+      if (
+        sub.name.toLowerCase() === subCategoryName.toLowerCase() &&
+        sub.page
+      ) {
+        return <sub.page />;
+      }
+    }
+  }
+  return null;
+};
 
 const SubCategoryPage: FC = () => {
   const router = useRouter();
   const { subCategory } = router.query;
-
-  // Ensure `subCategory` is a string before passing it to `Display`
   const displayName = typeof subCategory === "string" ? subCategory : undefined;
+  if (!displayName) return null;
+  const PageComponent = getPageComponent(displayName);
 
   return (
-    <div className="dark:bg-black">
-      <Header />
-      <SubHeader />
-
-      <div className="mx-auto grid w-full max-w-[88rem] grid-cols-[25%_75%]">
-        <Categories />
-        <Display name={displayName} />
-      </div>
-    </div>
+    <Layout>
+      <Display name={displayName} page={PageComponent} />
+    </Layout>
   );
 };
 

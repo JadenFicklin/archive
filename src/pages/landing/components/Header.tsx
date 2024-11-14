@@ -1,14 +1,13 @@
 import React from "react";
 import Image from "next/image";
-import { FaMoneyBillWave } from "react-icons/fa6";
-import coin from "~/assets/svgs/coin.svg"; // This will work as a path
+import coin from "~/assets/svgs/coin.svg";
 
 export default function Header() {
   return (
     <header className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 px-8 py-1 text-right font-sans text-sm font-medium tracking-tight text-white">
       <div className="mx-auto flex max-w-[88rem] justify-between px-6">
         <div className="relative">
-          Coins: 0{" "}
+          Coins: 0
           <Image
             src={coin}
             alt="coin"

@@ -18,3 +18,25 @@ model Post {
 
     @@index([name])
 }
+
+model users {
+    id        Int      @id @default(autoincrement())
+    email     String   @unique
+    name      String?
+    password  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    coins     coins[]  // One-to-many relation with coins
+}
+
+model coins {
+    id        Int      @id @default(autoincrement())
+    amount    Int
+    userId    Int
+
+    user      users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

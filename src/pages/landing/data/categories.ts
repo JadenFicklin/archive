@@ -1,9 +1,12 @@
+import { CookieClicker } from "~/pages/cookieClicker/CookieClicker";
+
 export const categories = [
   {
     category: "Arcade",
     categorySubs: [
       {
         name: "Cookie Clicker",
+        page: CookieClicker,
       },
       {
         name: "Rock Paper Scissors",
