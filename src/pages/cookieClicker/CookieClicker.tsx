@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import { PurchaseItem } from "~/pages/cookieClicker/components/PurchaseItem";
 import { cn } from "~/utils/cn";
-
+import { buildings } from "~/pages/cookieClicker/data/buildings";
 export const CookieClicker = () => {
   const [coins, setCoins] = useState(0);
   const [cookieClicked, setCookieClicked] = useState(false);
   const [incrementRate, setIncrementRate] = useState(0); // Total coins per second from all items
+
+  // Track the number of buildings purchased
+  const [purchasedBuildings, setPurchasedBuildings] = useState(
+    buildings.map(() => 0),
+  );
 
   // Increase coins every second based on the increment rate
   useEffect(() => {
@@ -18,11 +23,21 @@ export const CookieClicker = () => {
     return () => clearInterval(interval);
   }, [incrementRate]);
 
-  const handlePurchase = (price: number, increment: number) => {
+  const handlePurchase = (index: number, price: number, increment: number) => {
     if (coins >= price) {
       setCoins((prevCoins) => prevCoins - price); // Deduct the price
       setIncrementRate((prevRate) => prevRate + increment); // Add to the increment rate
+      setPurchasedBuildings((prevBuildings) => {
+        const newBuildings = [...prevBuildings];
+        newBuildings[index] = (newBuildings[index] || 0) + 1; // Safely increment
+        return newBuildings;
+      });
     }
+  };
+
+  // Calculate the price of a building based on the number purchased
+  const calculatePrice = (basePrice: number, quantity: number): number => {
+    return Math.ceil(basePrice * Math.pow(1.15, quantity));
   };
 
   useEffect(() => {
@@ -43,7 +58,7 @@ export const CookieClicker = () => {
             cookieClicked ? "-top-1" : "top-0",
           )}
         >
-          {coins}
+          {Math.round(coins)}
         </div>
       </h1>
       <div
@@ -61,36 +76,30 @@ export const CookieClicker = () => {
         <div className="absolute bottom-3 right-7 size-2 -rotate-45 bg-black"></div>
       </div>
 
-      <div className="mt-32 space-y-4">
-        <PurchaseItem
-          name="Grandma"
-          purchasePrice={10}
-          incrementPerSecond={1}
-          coins={coins}
-          onPurchase={handlePurchase}
-          disabled={coins < 10}
-        />
-        <PurchaseItem
-          name="Factory"
-          purchasePrice={50}
-          incrementPerSecond={5}
-          coins={coins}
-          onPurchase={handlePurchase}
-          disabled={coins < 50}
-        />
-        <PurchaseItem
-          name="Bakery"
-          purchasePrice={100}
-          incrementPerSecond={10}
-          coins={coins}
-          onPurchase={handlePurchase}
-          disabled={coins < 100}
-        />
+      <div className="">
+        Increment Rate:{" "}
+        <span className="font-bold">{incrementRate.toFixed(1)}</span> coins/sec
       </div>
-
-      <div className="mt-8">
-        Increment Rate: <span className="font-bold">{incrementRate}</span>{" "}
-        coins/sec
+      <div className="mt-32 space-y-4">
+        {buildings.map((building, index) => {
+          const currentPrice = calculatePrice(
+            building.basePrice,
+            purchasedBuildings[index] ?? 0,
+          );
+          return (
+            <PurchaseItem
+              key={building.name}
+              name={`${building.name} (x${purchasedBuildings[index]})`}
+              purchasePrice={currentPrice}
+              incrementPerSecond={building.cps}
+              coins={coins}
+              onPurchase={() =>
+                handlePurchase(index, currentPrice, building.cps)
+              }
+              disabled={coins < currentPrice}
+            />
+          );
+        })}
       </div>
     </div>
   );

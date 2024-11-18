@@ -17,7 +17,7 @@ export const PurchaseItem = ({
 }: PurchaseItemProps) => {
   return (
     <div
-      className={`cursor-pointer dark:text-white ${
+      className={`cursor-pointer select-none dark:text-white ${
         disabled ? "cursor-not-allowed opacity-50" : ""
       }`}
       onClick={
