@@ -3,16 +3,40 @@ import { PurchaseItem } from "~/pages/cookieClicker/components/PurchaseItem";
 import { cn } from "~/utils/cn";
 import { buildings } from "~/pages/cookieClicker/data/buildings";
 export const CookieClicker = () => {
-  const [coins, setCoins] = useState(0);
-  const [cookieClicked, setCookieClicked] = useState(false);
-  const [incrementRate, setIncrementRate] = useState(0); // Total coins per second from all items
+  const [coins, setCoins] = useState(() => {
+    // Initialize from local storage or default to 0
+    const savedCoins = localStorage.getItem("coins");
+    return savedCoins ? parseFloat(savedCoins) : 0;
+  });
 
-  // Track the number of buildings purchased
-  const [purchasedBuildings, setPurchasedBuildings] = useState(
-    buildings.map(() => 0),
-  );
+  const [incrementRate, setIncrementRate] = useState(() => {
+    // Initialize from local storage or default to 0
+    const savedIncrementRate = localStorage.getItem("incrementRate");
+    return savedIncrementRate ? parseFloat(savedIncrementRate) : 0;
+  });
 
-  // Increase coins every second based on the increment rate
+  const [purchasedBuildings, setPurchasedBuildings] = useState(() => {
+    // Initialize from local storage or default to an array of 0s
+    const savedBuildings = localStorage.getItem("purchasedBuildings");
+    return savedBuildings ? JSON.parse(savedBuildings) : buildings.map(() => 0);
+  });
+
+  // Save coins, increment rate, and purchased buildings to local storage when they change
+  useEffect(() => {
+    localStorage.setItem("coins", coins.toString());
+  }, [coins]);
+
+  useEffect(() => {
+    localStorage.setItem("incrementRate", incrementRate.toString());
+  }, [incrementRate]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "purchasedBuildings",
+      JSON.stringify(purchasedBuildings),
+    );
+  }, [purchasedBuildings]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (incrementRate > 0) {
@@ -25,26 +49,19 @@ export const CookieClicker = () => {
 
   const handlePurchase = (index: number, price: number, increment: number) => {
     if (coins >= price) {
-      setCoins((prevCoins) => prevCoins - price); // Deduct the price
-      setIncrementRate((prevRate) => prevRate + increment); // Add to the increment rate
-      setPurchasedBuildings((prevBuildings) => {
+      setCoins((prevCoins) => prevCoins - price);
+      setIncrementRate((prevRate) => prevRate + increment);
+      setPurchasedBuildings((prevBuildings: any) => {
         const newBuildings = [...prevBuildings];
-        newBuildings[index] = (newBuildings[index] || 0) + 1; // Safely increment
+        newBuildings[index] = (newBuildings[index] || 0) + 1;
         return newBuildings;
       });
     }
   };
 
-  // Calculate the price of a building based on the number purchased
   const calculatePrice = (basePrice: number, quantity: number): number => {
     return Math.ceil(basePrice * Math.pow(1.15, quantity));
   };
-
-  useEffect(() => {
-    setCookieClicked(true);
-    const timer = setTimeout(() => setCookieClicked(false), 50);
-    return () => clearTimeout(timer);
-  }, [coins]);
 
   return (
     <div className="relative p-4">
@@ -52,13 +69,8 @@ export const CookieClicker = () => {
         className={`relative flex w-min text-3xl duration-150 dark:text-white`}
       >
         Coins:{" "}
-        <div
-          className={cn(
-            "relative left-1 top-0 duration-75",
-            cookieClicked ? "-top-1" : "top-0",
-          )}
-        >
-          {Math.round(coins)}
+        <div className={cn("relative left-1 top-0 duration-75")}>
+          <span>{Math.round(coins)}</span>
         </div>
       </h1>
       <div
@@ -89,7 +101,7 @@ export const CookieClicker = () => {
           return (
             <PurchaseItem
               key={building.name}
-              name={`${building.name} (x${purchasedBuildings[index]})`}
+              name={`${building.name} (x${purchasedBuildings[index] ?? 0})`}
               purchasePrice={currentPrice}
               incrementPerSecond={building.cps}
               coins={coins}
