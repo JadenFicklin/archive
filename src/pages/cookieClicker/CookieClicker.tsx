@@ -1,9 +1,29 @@
 import { useState, useEffect } from "react";
+import { PurchaseItem } from "~/pages/cookieClicker/components/PurchaseItem";
 import { cn } from "~/utils/cn";
 
 export const CookieClicker = () => {
   const [coins, setCoins] = useState(0);
   const [cookieClicked, setCookieClicked] = useState(false);
+  const [incrementRate, setIncrementRate] = useState(0); // Total coins per second from all items
+
+  // Increase coins every second based on the increment rate
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (incrementRate > 0) {
+        setCoins((prevCoins) => prevCoins + incrementRate);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [incrementRate]);
+
+  const handlePurchase = (price: number, increment: number) => {
+    if (coins >= price) {
+      setCoins((prevCoins) => prevCoins - price); // Deduct the price
+      setIncrementRate((prevRate) => prevRate + increment); // Add to the increment rate
+    }
+  };
 
   useEffect(() => {
     setCookieClicked(true);
@@ -12,9 +32,9 @@ export const CookieClicker = () => {
   }, [coins]);
 
   return (
-    <div className="relative">
+    <div className="relative p-4">
       <h1
-        className={`relative flex w-min p-4 text-3xl duration-150 dark:bg-[#0e0e0e] dark:text-white`}
+        className={`relative flex w-min text-3xl duration-150 dark:text-white`}
       >
         Coins:{" "}
         <div
@@ -39,6 +59,38 @@ export const CookieClicker = () => {
         <div className="absolute right-2 top-9 size-3 -rotate-[60deg] bg-black"></div>
         <div className="absolute right-6 top-4 size-2 -rotate-12 bg-black"></div>
         <div className="absolute bottom-3 right-7 size-2 -rotate-45 bg-black"></div>
+      </div>
+
+      <div className="mt-32 space-y-4">
+        <PurchaseItem
+          name="Grandma"
+          purchasePrice={10}
+          incrementPerSecond={1}
+          coins={coins}
+          onPurchase={handlePurchase}
+          disabled={coins < 10}
+        />
+        <PurchaseItem
+          name="Factory"
+          purchasePrice={50}
+          incrementPerSecond={5}
+          coins={coins}
+          onPurchase={handlePurchase}
+          disabled={coins < 50}
+        />
+        <PurchaseItem
+          name="Bakery"
+          purchasePrice={100}
+          incrementPerSecond={10}
+          coins={coins}
+          onPurchase={handlePurchase}
+          disabled={coins < 100}
+        />
+      </div>
+
+      <div className="mt-8">
+        Increment Rate: <span className="font-bold">{incrementRate}</span>{" "}
+        coins/sec
       </div>
     </div>
   );
