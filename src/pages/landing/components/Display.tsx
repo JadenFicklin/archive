@@ -23,7 +23,7 @@ export const Display: React.FC<DisplayProps> = ({ name, subHeader, page }) => {
           {subHeader}
         </h2>
       )}
-      <div className="custom-shadow my-4 h-min min-h-[800px] w-full overflow-hidden rounded-[16px] border-[1px] border-[#e7e7e7] bg-[#f7f7f7] dark:border-[#1b1b1b] dark:bg-[#0e0e0e]">
+      <div className="custom-shadow my-4 h-min min-h-[700px] w-full overflow-hidden rounded-[16px] border-[1px] border-[#e7e7e7] bg-[#f7f7f7] dark:border-[#1b1b1b] dark:bg-[#0e0e0e]">
         {page}
       </div>
     </div>

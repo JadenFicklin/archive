@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { PurchaseItem } from "~/pages/cookieClicker/components/PurchaseItem";
 import { cn } from "~/utils/cn";
 import { buildings } from "~/pages/cookieClicker/data/buildings";
+import cookie from "~/pages/cookieClicker/assets/cookie.png";
+import background from "~/pages/cookieClicker/assets/background.jpg";
+import Image from "next/image";
+
 export const CookieClicker = () => {
   const [coins, setCoins] = useState(() => {
     // Initialize from local storage or default to 0
@@ -64,54 +68,66 @@ export const CookieClicker = () => {
   };
 
   return (
-    <div className="relative p-4">
-      <h1
-        className={`relative flex w-min text-3xl duration-150 dark:text-white`}
-      >
-        Coins:{" "}
-        <div className={cn("relative left-1 top-0 duration-75")}>
-          <span>{Math.round(coins)}</span>
+    <div className="relative grid grid-cols-[30%,35%,35%]">
+      <div className="relative overflow-hidden">
+        <div className="absolute z-20 w-full">
+          <div className="mt-10 w-full bg-black bg-opacity-50">
+            <h1 className={`text-center text-2xl font-semibold text-white`}>
+              {Math.round(coins).toLocaleString()} cookies
+            </h1>
+            <h2 className="text-md -mt-1 text-center text-white text-opacity-80">
+              per second: {incrementRate.toFixed(1).toLocaleString()}
+            </h2>
+          </div>
+          <Image
+            src={cookie}
+            alt="cookie"
+            className="mx-auto mt-12 size-48 cursor-pointer rounded-full duration-150 hover:scale-110 active:scale-125"
+            onClick={() => setCoins(coins + 1)}
+          />
         </div>
-      </h1>
-      <div
-        className={cn(
-          "absolute left-5 top-20 size-20 cursor-pointer rounded-full bg-amber-900 duration-150 hover:scale-105 active:scale-110",
-        )}
-        onClick={() => setCoins(coins + 1)}
-      >
-        <div className="absolute left-2 top-8 size-2 -rotate-12 bg-black"></div>
-        <div className="absolute left-5 top-4 size-3 rotate-12 bg-black"></div>
-        <div className="absolute bottom-4 left-3 size-3 -rotate-45 bg-black"></div>
-        <div className="absolute right-8 top-9 size-3 rotate-[60deg] bg-black"></div>
-        <div className="absolute right-2 top-9 size-3 -rotate-[60deg] bg-black"></div>
-        <div className="absolute right-6 top-4 size-2 -rotate-12 bg-black"></div>
-        <div className="absolute bottom-3 right-7 size-2 -rotate-45 bg-black"></div>
-      </div>
+        <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-black/0 to-black/90"></div>
 
-      <div className="">
-        Increment Rate:{" "}
-        <span className="font-bold">{incrementRate.toFixed(1)}</span> coins/sec
+        <Image
+          src={background}
+          alt="cookie"
+          className="absolute left-0 top-0 h-full w-full"
+          onClick={() => setCoins(coins + 1)}
+        />
       </div>
-      <div className="mt-32 space-y-4">
-        {buildings.map((building, index) => {
-          const currentPrice = calculatePrice(
-            building.basePrice,
-            purchasedBuildings[index] ?? 0,
-          );
-          return (
-            <PurchaseItem
-              key={building.name}
-              name={`${building.name} (x${purchasedBuildings[index] ?? 0})`}
-              purchasePrice={currentPrice}
-              incrementPerSecond={building.cps}
-              coins={coins}
-              onPurchase={() =>
-                handlePurchase(index, currentPrice, building.cps)
-              }
-              disabled={coins < currentPrice}
-            />
-          );
-        })}
+      <div></div>
+      <div className="relative">
+        <div className="scrollbar-hide relative z-20 h-[700px] overflow-auto">
+          {buildings.map((building, index) => {
+            const currentPrice = calculatePrice(
+              building.basePrice,
+              purchasedBuildings[index] ?? 0,
+            );
+            return (
+              <PurchaseItem
+                key={building.name}
+                name={`${building.name}`}
+                amount={purchasedBuildings[index] ?? 0}
+                purchasePrice={currentPrice}
+                incrementPerSecond={building.cps}
+                coins={coins}
+                onPurchase={() =>
+                  handlePurchase(index, currentPrice, building.cps)
+                }
+                disabled={coins < currentPrice}
+              />
+            );
+          })}
+        </div>
+        <div>
+          <div className="absolute left-0 top-0 z-10 h-full w-full bg-black bg-opacity-70"></div>
+          <Image
+            src={background}
+            alt="cookie"
+            className="absolute left-0 top-0 h-full w-full"
+            onClick={() => setCoins(coins + 1)}
+          />
+        </div>
       </div>
     </div>
   );

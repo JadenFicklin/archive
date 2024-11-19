@@ -14,3 +14,11 @@
     box-shadow: 0px 8px 25px 8px rgba(0, 0, 0, 0.04);
   }
 }
+
+.text-outline {
+  text-shadow:
+    0.5px 0.5px 2px rgb(50, 50, 50),
+    0 -0.5px 2px rgb(50, 50, 50),
+    -0.5px 0 2px rgb(50, 50, 50),
+    0 0.5px 2px rgb(50, 50, 50);
+}

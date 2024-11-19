@@ -1,5 +1,6 @@
 type PurchaseItemProps = {
   name: string; // Name of the item (e.g., Grandma, Factory, Bakery)
+  amount: number; // Number of buildings
   purchasePrice: number; // Cost to buy the item
   incrementPerSecond: number; // Coins added per second by each item
   coins: number; // Current coin count
@@ -7,8 +8,14 @@ type PurchaseItemProps = {
   disabled: boolean; // Whether the item is purchasable
 };
 
+import Image from "next/image";
+import purchaseBackground from "~/pages/cookieClicker/assets/purchaseBackground.png";
+import { cn } from "~/utils/cn";
+import cookie from "~/pages/cookieClicker/assets/cookie.png";
+
 export const PurchaseItem = ({
   name,
+  amount,
   purchasePrice,
   incrementPerSecond,
   coins,
@@ -17,18 +24,50 @@ export const PurchaseItem = ({
 }: PurchaseItemProps) => {
   return (
     <div
-      className={`cursor-pointer select-none dark:text-white ${
-        disabled ? "cursor-not-allowed opacity-50" : ""
-      }`}
+      className="group relative h-[70px]"
       onClick={
         !disabled
           ? () => onPurchase(purchasePrice, incrementPerSecond)
           : undefined
       }
     >
-      {name}: purchase price{" "}
-      <span className="text-red-600 dark:text-red-400">{purchasePrice}</span> |
-      +{incrementPerSecond} coins/sec
+      <div
+        className={`relative z-10 h-full w-full cursor-pointer select-none ${
+          disabled ? "cursor-not-allowed opacity-50" : ""
+        }`}
+      >
+        <div className="ml-16 grid h-[88%] grid-rows-2 pt-2">
+          <div className="text-outline text-2xl font-semibold text-white">
+            {name}
+          </div>
+          <div className="flex flex-wrap items-center space-x-1">
+            <Image
+              src={cookie}
+              alt="cookie"
+              className={cn(
+                "rouned-full size-3",
+                disabled
+                  ? "opacity-60"
+                  : "opacity-100 group-hover:brightness-125",
+              )}
+            />
+            <span className="text-outline text-sm font-bold text-[#66FF66]">
+              {purchasePrice.toLocaleString()}
+            </span>
+          </div>{" "}
+        </div>
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-5xl font-bold text-black text-opacity-30">
+          {amount.toLocaleString()}
+        </div>
+      </div>
+      <Image
+        src={purchaseBackground}
+        alt="purchase background"
+        className={cn(
+          "absolute left-0 top-0 h-full w-full cursor-pointer transition-all",
+          disabled ? "opacity-60" : "opacity-100 group-hover:brightness-125",
+        )}
+      />
     </div>
   );
 };
