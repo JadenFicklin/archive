@@ -4,7 +4,10 @@ import { cn } from "~/utils/cn";
 import { buildings } from "~/pages/cookieClicker/data/buildings";
 import cookie from "~/pages/cookieClicker/assets/cookie.png";
 import background from "~/pages/cookieClicker/assets/background.jpg";
+import pannelVerticle from "~/pages/cookieClicker/assets/panelVertical.png";
+import pannelHorizontal from "~/pages/cookieClicker/assets/panelHorizontal.png";
 import Image from "next/image";
+import { Building } from "~/pages/cookieClicker/components/Building";
 
 export const CookieClicker = () => {
   const [coins, setCoins] = useState(() => {
@@ -83,7 +86,6 @@ export const CookieClicker = () => {
             src={cookie}
             alt="cookie"
             className="mx-auto mt-12 size-48 cursor-pointer rounded-full duration-150 hover:scale-110 active:scale-125"
-            onClick={() => setCoins(coins + 1)}
           />
         </div>
         <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-black/0 to-black/90"></div>
@@ -95,7 +97,39 @@ export const CookieClicker = () => {
           onClick={() => setCoins(coins + 1)}
         />
       </div>
-      <div></div>
+      <div className="relative">
+        <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-black/0 to-black/40"></div>
+        <div className="relative z-10">
+          {buildings.map((building, index) => {
+            const currentPrice = calculatePrice(
+              building.basePrice,
+              purchasedBuildings[index] ?? 0,
+            );
+            return <Building amount={purchasedBuildings[index] ?? 0} />;
+          })}
+          <Image
+            src={pannelHorizontal}
+            alt="pannel"
+            className="absolute -bottom-3 left-0 z-10 h-3 w-full"
+          />
+        </div>
+
+        <Image
+          src={pannelVerticle}
+          alt="pannel"
+          className="absolute left-0 top-0 z-10 h-full"
+        />
+        <Image
+          src={pannelVerticle}
+          alt="pannel"
+          className="absolute right-0 top-0 z-10 h-full"
+        />
+        <Image
+          src={background}
+          alt="background"
+          className="absolute left-0 top-0 h-full w-full"
+        />
+      </div>
       <div className="relative">
         <div className="scrollbar-hide relative z-20 h-[700px] overflow-auto">
           {buildings.map((building, index) => {
@@ -123,9 +157,8 @@ export const CookieClicker = () => {
           <div className="absolute left-0 top-0 z-10 h-full w-full bg-black bg-opacity-70"></div>
           <Image
             src={background}
-            alt="cookie"
+            alt="background"
             className="absolute left-0 top-0 h-full w-full"
-            onClick={() => setCoins(coins + 1)}
           />
         </div>
       </div>
