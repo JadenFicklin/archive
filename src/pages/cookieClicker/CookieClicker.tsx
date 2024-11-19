@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { PurchaseItem } from "~/pages/cookieClicker/components/PurchaseItem";
-import { cn } from "~/utils/cn";
 import { buildings } from "~/pages/cookieClicker/data/buildings";
 import cookie from "~/pages/cookieClicker/assets/cookie.png";
 import background from "~/pages/cookieClicker/assets/background.jpg";
@@ -105,8 +104,19 @@ export const CookieClicker = () => {
               building.basePrice,
               purchasedBuildings[index] ?? 0,
             );
-            return <Building amount={purchasedBuildings[index] ?? 0} />;
+
+            return index === 0 ? (
+              <></>
+            ) : (
+              <Building
+                key={index}
+                amount={purchasedBuildings[index] ?? 0}
+                background={building.background}
+                backgroundIcon={building.backgroundIcon}
+              />
+            );
           })}
+
           <Image
             src={pannelHorizontal}
             alt="pannel"
@@ -142,6 +152,7 @@ export const CookieClicker = () => {
                 key={building.name}
                 name={`${building.name}`}
                 amount={purchasedBuildings[index] ?? 0}
+                icon={building.icon}
                 purchasePrice={currentPrice}
                 incrementPerSecond={building.cps}
                 coins={coins}

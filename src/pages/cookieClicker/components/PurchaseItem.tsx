@@ -1,23 +1,25 @@
+import purchaseBackground from "~/pages/cookieClicker/assets/purchaseBackground.png";
+import { cn } from "~/utils/cn";
+import cookie from "~/pages/cookieClicker/assets/cookie.png";
+import Image, { StaticImageData } from "next/image";
+
 type PurchaseItemProps = {
   name: string; // Name of the item (e.g., Grandma, Factory, Bakery)
   amount: number; // Number of buildings
   purchasePrice: number; // Cost to buy the item
   incrementPerSecond: number; // Coins added per second by each item
+  icon: StaticImageData;
   coins: number; // Current coin count
   onPurchase: (price: number, increment: number) => void; // Purchase handler
   disabled: boolean; // Whether the item is purchasable
 };
-
-import Image from "next/image";
-import purchaseBackground from "~/pages/cookieClicker/assets/purchaseBackground.png";
-import { cn } from "~/utils/cn";
-import cookie from "~/pages/cookieClicker/assets/cookie.png";
 
 export const PurchaseItem = ({
   name,
   amount,
   purchasePrice,
   incrementPerSecond,
+  icon,
   coins,
   onPurchase,
   disabled,
@@ -37,6 +39,11 @@ export const PurchaseItem = ({
         }`}
       >
         <div className="ml-16 grid h-[88%] grid-rows-2 pt-2">
+          <Image
+            src={icon}
+            alt="building-icon"
+            className="absolute left-[6px] z-20 mx-auto h-[80%] w-max"
+          />
           <div className="text-outline text-2xl font-semibold text-white">
             {name}
           </div>
