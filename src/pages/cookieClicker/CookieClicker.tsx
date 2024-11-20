@@ -7,6 +7,7 @@ import pannelVerticle from "~/pages/cookieClicker/assets/panelVertical.png";
 import pannelHorizontal from "~/pages/cookieClicker/assets/panelHorizontal.png";
 import Image from "next/image";
 import { Building } from "~/pages/cookieClicker/components/Building";
+import { LightEffect } from "~/pages/cookieClicker/components/LightEffect";
 
 export const CookieClicker = () => {
   const [coins, setCoins] = useState(() => {
@@ -81,12 +82,33 @@ export const CookieClicker = () => {
               per second: {incrementRate.toFixed(1).toLocaleString()}
             </h2>
           </div>
-          <Image
-            src={cookie}
-            alt="cookie"
-            className="mx-auto mt-12 size-48 cursor-pointer rounded-full duration-150 hover:scale-110 active:scale-125"
-          />
+
+          <div className="relative">
+            {/* Light Effects */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <LightEffect
+                spinDirection="clockwise"
+                size="size-[370px]"
+                blur="blur-[3px]"
+                slices={12}
+              />
+              <LightEffect
+                spinDirection="counterclockwise"
+                size="size-96"
+                blur="blur-[2px]"
+                slices={20}
+              />
+            </div>
+
+            {/* Cookie */}
+            <Image
+              src={cookie}
+              alt="cookie"
+              className="relative z-10 mx-auto mt-12 size-48 cursor-pointer rounded-full duration-150 hover:scale-110 active:scale-125"
+            />
+          </div>
         </div>
+
         <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-black/0 to-black/90"></div>
 
         <Image
@@ -96,9 +118,11 @@ export const CookieClicker = () => {
           onClick={() => setCoins(coins + 1)}
         />
       </div>
+
       <div className="relative">
         <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-black/0 to-black/40"></div>
         <div className="relative z-10">
+          <div className="h-20 w-full"></div>
           {buildings.map((building, index) => {
             const currentPrice = calculatePrice(
               building.basePrice,

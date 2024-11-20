@@ -14,6 +14,16 @@ export default {
         lightGray: "#808080",
         accent: "#EAEAEA",
       },
+      animation: {
+        "spin-slow": "spin 12s linear infinite",
+        "spin-slow-reverse": "spin-reverse 10s linear infinite",
+      },
+      keyframes: {
+        "spin-reverse": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(-360deg)" },
+        },
+      },
     },
   },
   plugins: [],
