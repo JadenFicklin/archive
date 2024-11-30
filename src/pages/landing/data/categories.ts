@@ -1,4 +1,5 @@
 import { CookieClicker } from "~/pages/cookieClicker/CookieClicker";
+import { OpenAI } from "~/pages/openAI/OpenAI";
 
 export const categories = [
   {
@@ -34,6 +35,8 @@ export const categories = [
     categorySubs: [
       {
         name: "OpenAi",
+        subHeader: "Different AI chatbots",
+        page: OpenAI,
       },
       {
         name: "Spotify",
