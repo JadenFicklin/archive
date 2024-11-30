@@ -25,8 +25,8 @@ import templeBackgroundIcon from "~/pages/cookieClicker/assets/buildingAssets/Te
 import templeBackground from "~/pages/cookieClicker/assets/buildingAssets/TempleBackground.webp";
 
 import wizardTowerIcon from "~/pages/cookieClicker/assets/buildingAssets/WizardTowerIconLarge.webp";
-import wizardTowerBackgroundIcon from "~/pages/cookieClicker/assets/buildingAssets/Temple.webp";
-import wizardTowerBackground from "~/pages/cookieClicker/assets/buildingAssets/TempleBackground.webp";
+import wizardTowerBackgroundIcon from "~/pages/cookieClicker/assets/buildingAssets/Wizardtower.webp";
+import wizardTowerBackground from "~/pages/cookieClicker/assets/buildingAssets/WizardTowerBackground.webp";
 
 import timeMachineIcon from "~/pages/cookieClicker/assets/buildingAssets/TimeMachineIconTransparent.webp";
 import timeMachineBackgroundIcon from "~/pages/cookieClicker/assets/buildingAssets/TimemachineNew.webp";

@@ -122,7 +122,7 @@ export const CookieClicker = () => {
       <div className="relative">
         <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-black/0 to-black/40"></div>
         <div className="relative z-10">
-          <div className="h-20 w-full"></div>
+          <div className="h-12 w-full"></div>
           {buildings.map((building, index) => {
             const currentPrice = calculatePrice(
               building.basePrice,
