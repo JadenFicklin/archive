@@ -31,6 +31,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [displayedMessage, setDisplayedMessage] = useState<string>(""); // For word-by-word typing
   const inputRef = useRef<HTMLInputElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Focus input when chatbot opens
@@ -38,6 +39,16 @@ export const Chatbot: React.FC<ChatbotProps> = ({
       inputRef.current.focus();
     }
   }, []);
+
+  useEffect(() => {
+    // Scroll to the bottom when chatHistory changes
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [chatHistory]);
 
   async function handleSendMessage(event?: React.FormEvent<HTMLFormElement>) {
     if (event) {
@@ -141,7 +152,10 @@ export const Chatbot: React.FC<ChatbotProps> = ({
       </header>
 
       {/* Chat History */}
-      <main className="flex-1 space-y-4 overflow-y-auto p-4">
+      <main
+        ref={chatContainerRef}
+        className="scrollbar-hide flex-1 space-y-4 overflow-y-auto p-4"
+      >
         {/* Static Introduction */}
         <div className="flex justify-start">
           <div className="text-gray-800 max-w-[70%] rounded-lg bg-white p-3 shadow-md">
@@ -186,7 +200,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({
       </main>
 
       {/* Input Area */}
-      <footer className="border-t bg-white p-4 shadow-md">
+      <footer className="border-t border-[#00000077] bg-white p-4 shadow-md dark:bg-black dark:bg-opacity-30">
         <div className="flex items-center space-x-2">
           <input
             ref={inputRef}
@@ -194,7 +208,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
-            className="flex-1 resize-none rounded-lg border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 resize-none rounded-lg border border-[#00000077] p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-black dark:bg-opacity-80 dark:text-white"
           />
           <button
             type="submit"

@@ -32,7 +32,7 @@ export const OpenAI: React.FC = () => {
           <div
             key={bot.name}
             onClick={() => setSelectedChatbot(bot)}
-            className="flex cursor-pointer flex-col items-center space-y-2 rounded-lg bg-white p-4 text-center shadow-md transition hover:shadow-lg"
+            className="flex cursor-pointer flex-col items-center space-y-2 rounded-lg bg-white p-4 text-center shadow-md transition hover:shadow-lg dark:bg-black dark:bg-opacity-70 dark:shadow-[#161616] dark:hover:bg-opacity-40"
           >
             <Image
               src={bot.image}
@@ -41,8 +41,12 @@ export const OpenAI: React.FC = () => {
               width={80}
               height={80}
             />
-            <h2 className="text-gray-700 text-lg font-semibold">{bot.name}</h2>
-            <p className="text-gray-500 text-sm">Model: {bot.model}</p>
+            <h2 className="text-gray-700 text-lg font-semibold dark:text-white">
+              {bot.name}
+            </h2>
+            <p className="text-gray-500 text-sm dark:text-white">
+              Model: {bot.model}
+            </p>
           </div>
         ))}
       </div>

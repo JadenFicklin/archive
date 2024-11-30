@@ -22,3 +22,11 @@
     -0.5px 0 2px rgb(50, 50, 50),
     0 0.5px 2px rgb(50, 50, 50);
 }
+
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

@@ -35,7 +35,8 @@ export const categories = [
     categorySubs: [
       {
         name: "OpenAi",
-        subHeader: "Different AI chatbots",
+        subHeader:
+          "Interact with unique personalities powered by the OpenAI API.",
         page: OpenAI,
       },
       {
