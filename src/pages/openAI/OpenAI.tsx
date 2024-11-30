@@ -1,65 +1,51 @@
 import { useState } from "react";
+import { Chatbot } from "~/pages/openAI/components/ChatBot";
+import { chatbots, ChatbotInfo } from "~/pages/openAI/data/chatbots";
+import Image from "next/image";
 
-export const OpenAI = () => {
-  const [message, setMessage] = useState("");
-  const [response, setResponse] = useState("");
+export const OpenAI: React.FC = () => {
+  const [selectedChatbot, setSelectedChatbot] = useState<ChatbotInfo | null>(
+    null,
+  );
 
-  async function handleSendMessage() {
-    try {
-      const APIBody = {
-        model: "gpt-4o",
-        messages: [{ role: "user", content: message }],
-        temperature: 0.7,
-        max_tokens: 150,
-      };
-
-      const result = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify(APIBody),
-      });
-
-      if (!result.ok) {
-        const error = await result.json();
-        throw new Error(error.error.message);
-      }
-
-      const data = await result.json();
-      console.log(data);
-      setResponse(data.choices[0].message.content.trim());
-    } catch (error) {
-      console.error("Error calling OpenAI API:", error);
-      setResponse("Failed to fetch response from OpenAI.");
-    }
+  if (selectedChatbot) {
+    return (
+      <div>
+        {/* Selected Chatbot */}
+        <Chatbot
+          name={selectedChatbot.name}
+          model={selectedChatbot.model}
+          description={selectedChatbot.description}
+          maxTokens={selectedChatbot.maxTokens}
+          character={selectedChatbot.character}
+          image={selectedChatbot.image}
+          onBack={() => setSelectedChatbot(null)}
+        />
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h1>Chat with OpenAI</h1>
-      <textarea
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Type your message here..."
-        rows={5}
-        cols={50}
-      />
-      <div>
-        <button
-          onClick={handleSendMessage}
-          className="rounded-md bg-blue-500 p-2 text-white duration-150 hover:bg-blue-600"
-        >
-          Send
-        </button>
+    <div className="bg-gray-100 p-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {chatbots.map((bot) => (
+          <div
+            key={bot.name}
+            onClick={() => setSelectedChatbot(bot)}
+            className="flex cursor-pointer flex-col items-center space-y-2 rounded-lg bg-white p-4 text-center shadow-md transition hover:shadow-lg"
+          >
+            <Image
+              src={bot.image}
+              alt={bot.name}
+              className="rounded-full"
+              width={80}
+              height={80}
+            />
+            <h2 className="text-gray-700 text-lg font-semibold">{bot.name}</h2>
+            <p className="text-gray-500 text-sm">Model: {bot.model}</p>
+          </div>
+        ))}
       </div>
-      {response && (
-        <div>
-          <h3>Response:</h3>
-          <p>{response}</p>
-        </div>
-      )}
     </div>
   );
 };
