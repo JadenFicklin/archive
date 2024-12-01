@@ -1,5 +1,6 @@
 import { CookieClicker } from "~/pages/cookieClicker/CookieClicker";
 import { OpenAI } from "~/pages/openAI/OpenAI";
+import { Spotify } from "~/pages/spotify/Spotify";
 
 export const categories = [
   {
@@ -41,6 +42,8 @@ export const categories = [
       },
       {
         name: "Spotify",
+        subHeader: "browse songs powered by the spotify API.",
+        page: Spotify,
       },
       {
         name: "Pokemon",

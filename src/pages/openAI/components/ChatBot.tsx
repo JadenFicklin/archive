@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image, { StaticImageData } from "next/image";
 import { PulseLoader } from "react-spinners";
+import { IoMdArrowBack } from "react-icons/io";
 
 type Message = {
   role: "user" | "assistant";
@@ -139,7 +140,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({
       {/* Header */}
       <header className="flex items-center space-x-4 bg-blue-600 p-4 text-lg font-semibold text-white shadow-md">
         <button onClick={onBack} className="hover:text-gray-200 text-white">
-          ←
+          <IoMdArrowBack />
         </button>
         <Image
           src={image}

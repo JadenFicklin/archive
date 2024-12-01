@@ -105,6 +105,7 @@ export const CookieClicker = () => {
               src={cookie}
               alt="cookie"
               className="relative z-10 mx-auto mt-12 size-48 cursor-pointer rounded-full duration-150 hover:scale-110 active:scale-125"
+              onClick={() => setCoins((prevCoins) => prevCoins + 1)}
             />
           </div>
         </div>
