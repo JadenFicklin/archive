@@ -17,7 +17,6 @@ export const Spotify = () => {
   const [tracks, setTracks] = useState<Track[]>([]);
   const [deviceId, setDeviceId] = useState<string | null>(null);
 
-  // Load token on mount
   useEffect(() => {
     const tokenFromUrl = getTokenFromUrl();
     if (tokenFromUrl.token) {
@@ -30,7 +29,6 @@ export const Spotify = () => {
     }
   }, []);
 
-  // Load Spotify Web Playback SDK
   useEffect(() => {
     if (token) {
       const script = document.createElement("script");
@@ -79,30 +77,9 @@ export const Spotify = () => {
     }
   };
 
-  const playTrack = async (trackUri: string) => {
-    if (!deviceId) {
-      console.error("No active device available for playback.");
-      return;
-    }
-    try {
-      await axios.put(
-        `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
-        { uris: [trackUri] },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        },
-      );
-    } catch (error) {
-      console.error("Error playing track:", error);
-    }
-  };
-
   return (
     <div className="p-3">
-      <h1 className="py-10 text-2xl">Spotify React</h1>
+      <h1 className="text-2xl">Spotify React</h1>
       <AuthButton token={token} onLogout={logout} />
       {token && (
         <>
@@ -111,7 +88,7 @@ export const Spotify = () => {
             onSearchChange={setSearchKey}
             onSearchSubmit={searchTracks}
           />
-          <TrackList tracks={tracks} onPlay={playTrack} />
+          <TrackList tracks={tracks} token={token} deviceId={deviceId} />
         </>
       )}
     </div>
