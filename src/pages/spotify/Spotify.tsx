@@ -16,6 +16,7 @@ export const Spotify = () => {
   const [searchKey, setSearchKey] = useState("");
   const [tracks, setTracks] = useState<Track[]>([]);
   const [deviceId, setDeviceId] = useState<string | null>(null);
+  const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
 
   useEffect(() => {
     const tokenFromUrl = getTokenFromUrl();
@@ -77,9 +78,25 @@ export const Spotify = () => {
     }
   };
 
+  const pauseTrack = async () => {
+    try {
+      await axios.put(
+        "https://api.spotify.com/v1/me/player/pause",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      setCurrentTrack(null); // Clear the currently playing track
+    } catch (error) {
+      console.error("Error pausing track:", error);
+    }
+  };
+
   return (
     <div className="p-3">
-      <h1 className="text-2xl">Spotify React</h1>
       <AuthButton token={token} onLogout={logout} />
       {token && (
         <>
@@ -88,7 +105,12 @@ export const Spotify = () => {
             onSearchChange={setSearchKey}
             onSearchSubmit={searchTracks}
           />
-          <TrackList tracks={tracks} token={token} deviceId={deviceId} />
+          <TrackList
+            tracks={tracks}
+            token={token}
+            deviceId={deviceId}
+            onPlay={(track) => setCurrentTrack(track)}
+          />
         </>
       )}
     </div>
