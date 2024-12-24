@@ -16,7 +16,7 @@ export const Spotify = () => {
   const [searchKey, setSearchKey] = useState("");
   const [tracks, setTracks] = useState<Track[]>([]);
   const [deviceId, setDeviceId] = useState<string | null>(null);
-  const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
+  const [, setCurrentTrack] = useState<Track | null>(null);
 
   useEffect(() => {
     const tokenFromUrl = getTokenFromUrl();
@@ -78,41 +78,35 @@ export const Spotify = () => {
     }
   };
 
-  const pauseTrack = async () => {
-    try {
-      await axios.put(
-        "https://api.spotify.com/v1/me/player/pause",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      setCurrentTrack(null); // Clear the currently playing track
-    } catch (error) {
-      console.error("Error pausing track:", error);
-    }
-  };
-
   return (
-    <div className="p-3">
-      <AuthButton token={token} onLogout={logout} />
-      {token && (
-        <>
-          <Search
-            searchKey={searchKey}
-            onSearchChange={setSearchKey}
-            onSearchSubmit={searchTracks}
-          />
-          <TrackList
-            tracks={tracks}
-            token={token}
-            deviceId={deviceId}
-            onPlay={(track) => setCurrentTrack(track)}
-          />
-        </>
-      )}
-    </div>
+    <>
+      <div className="relative p-3">
+        <AuthButton token={token} onLogout={logout} />
+        {token && (
+          <>
+            <Search
+              searchKey={searchKey}
+              onSearchChange={setSearchKey}
+              onSearchSubmit={searchTracks}
+            />
+            <TrackList
+              tracks={tracks}
+              token={token}
+              deviceId={deviceId}
+              onPlay={(track) => setCurrentTrack(track)}
+            />
+            {/* <input
+              placeholder="search songs/artists"
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="mx-2 rounded-md border border-blue-500 p-1"
+            />
+            <div className="my-2 h-96 w-full overflow-y-auto rounded-md border border-blue-500"></div> */}
+          </>
+        )}
+      </div>
+      {/* <div className="absolute bottom-0 h-16 w-full border-t border-blue-500"></div> */}
+    </>
   );
 };
