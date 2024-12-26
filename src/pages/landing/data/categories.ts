@@ -1,3 +1,4 @@
+import { Cats } from "~/pages/404Cats/Cats";
 import { CookieClicker } from "~/pages/cookieClicker/CookieClicker";
 import { OpenAI } from "~/pages/openAI/OpenAI";
 import { Spotify } from "~/pages/spotify/Spotify";
@@ -99,6 +100,8 @@ export const categories = [
     categorySubs: [
       {
         name: "404 Cats",
+        subHeader: "learn error codes with the magic of cats",
+        page: Cats,
       },
       {
         name: "Lazy Loading",
