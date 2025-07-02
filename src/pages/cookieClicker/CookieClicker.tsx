@@ -58,9 +58,9 @@ export const CookieClicker = () => {
     if (coins >= price) {
       setCoins((prevCoins) => prevCoins - price);
       setIncrementRate((prevRate) => prevRate + increment);
-      setPurchasedBuildings((prevBuildings: any) => {
+      setPurchasedBuildings((prevBuildings: number[]) => {
         const newBuildings = [...prevBuildings];
-        newBuildings[index] = (newBuildings[index] || 0) + 1;
+        newBuildings[index] = (newBuildings[index] ?? 0) + 1;
         return newBuildings;
       });
     }

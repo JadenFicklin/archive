@@ -45,14 +45,14 @@ export const TrackItem = ({
       onClick={playTrack} // Click to play the track
     >
       <img
-        src={track.album.images[0]?.url || ""}
+        src={track.album.images[0]?.url ?? ""}
         alt={track.name}
         className="h-16 w-16"
       />
       <div>
-        <p className="font-medium">{track?.name || "Unknown Track"}</p>
+        <p className="font-medium">{track?.name ?? "Unknown Track"}</p>
         <p className="text-gray-500 text-sm">
-          {track?.artists?.[0]?.name || "Unknown Artist"}
+          {track?.artists?.[0]?.name ?? "Unknown Artist"}
         </p>
       </div>
     </div>

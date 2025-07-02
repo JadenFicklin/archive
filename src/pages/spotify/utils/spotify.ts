@@ -2,7 +2,7 @@ export const getTokenFromUrl = () => {
   const hash = window.location.hash;
   const params = new URLSearchParams(hash.substring(1));
   const token = params.get("access_token");
-  const expiresIn = parseInt(params.get("expires_in") || "3600") * 1000;
+  const expiresIn = parseInt(params.get("expires_in") ?? "3600") * 1000;
 
   return { token, expiresIn };
 };
@@ -15,7 +15,7 @@ export const saveToken = (token: string, expiresIn: number) => {
 
 export const loadToken = () => {
   const token = window.localStorage.getItem("token");
-  const expiresIn = parseInt(window.localStorage.getItem("expires_in") || "0");
+  const expiresIn = parseInt(window.localStorage.getItem("expires_in") ?? "0");
   if (token && expiresIn > Date.now()) {
     return token;
   }

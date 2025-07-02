@@ -4,7 +4,7 @@ interface AuthButtonProps {
 }
 
 export const AuthButton = ({ token, onLogout }: AuthButtonProps) => {
-  const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID || "";
+  const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID ?? "";
   const REDIRECT_URI = "http://localhost:3000/spotify";
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const SCOPES = "streaming user-modify-playback-state";

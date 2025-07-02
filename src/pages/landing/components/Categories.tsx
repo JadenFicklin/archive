@@ -13,9 +13,9 @@ interface Category {
 }
 
 export const Categories: React.FC = () => {
-  const [expandedCategories, setExpandedCategories] = useState<{
-    [key: number]: boolean;
-  }>({});
+  const [expandedCategories, setExpandedCategories] = useState<
+    Record<number, boolean>
+  >({});
   const router = useRouter();
 
   const toggleCategory = (index: number) => {
@@ -26,7 +26,7 @@ export const Categories: React.FC = () => {
   };
 
   const handleSubItemClick = (name: string) => {
-    router.push(`/${name.toLowerCase()}`);
+    void router.push(`/${name.toLowerCase()}`);
   };
 
   return (

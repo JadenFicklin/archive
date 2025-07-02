@@ -29,7 +29,11 @@ const SubCategoryPage: FC = () => {
 
   return (
     <Layout>
-      <Display name={displayName} subHeader={subHeader} page={PageComponent} />
+      <Display
+        name={displayName}
+        subHeader={subHeader ?? ""}
+        page={PageComponent}
+      />
     </Layout>
   );
 };
